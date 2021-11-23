@@ -20,3 +20,17 @@ device.setRGB(255, 126, 0);
 device.setBrightness(100);
 ```
 For a complete overview of available commands, see the [API documentation](https://github.com/florian-mollin/yapi/wiki).
+
+## For use music mode.
+
+```java
+YeelightDevice device = new YeelightDevice("192.168.3.12");
+YeelightMusicServer server = device.enableMusicMode();
+server.setPower(true);
+// Change device color
+server.setBrightness(100);
+server.setRGB(255, 126, 0);
+Thread.sleep(1000);
+server.setRGB(255, 0, 0);
+server.setBrightness(50);
+```

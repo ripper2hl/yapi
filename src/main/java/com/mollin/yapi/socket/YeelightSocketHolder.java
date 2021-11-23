@@ -17,7 +17,7 @@ public class YeelightSocketHolder {
     /**
      * Default socket timeout
      */
-    private static int SOCKET_TIMEOUT = 1000;
+    private static final int SOCKET_TIMEOUT = 1000;
     /**
      * Socket IP
      */
@@ -96,5 +96,9 @@ public class YeelightSocketHolder {
         } catch (Exception e) {
             throw new YeelightSocketException(e);
         }
+    }
+    
+    public String getIp() {
+        return ip;
     }
 }

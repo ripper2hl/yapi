@@ -6,12 +6,13 @@ import com.mollin.yapi.enumeration.YeelightAdjustProperty;
 import com.mollin.yapi.enumeration.YeelightEffect;
 import com.mollin.yapi.enumeration.YeelightProperty;
 import com.mollin.yapi.exception.YeelightResultErrorException;
+import com.mollin.yapi.exception.YeelightSocketException;
 import com.mollin.yapi.flow.YeelightFlow;
 import com.mollin.yapi.result.YeelightResultError;
 import com.mollin.yapi.result.YeelightResultOk;
-import com.mollin.yapi.exception.YeelightSocketException;
 import com.mollin.yapi.socket.YeelightSocketHolder;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -27,7 +28,7 @@ public class YeelightDevice {
     /**
      * Socket holder for sending commands (and receive results)
      */
-    private final YeelightSocketHolder socketHolder;
+    public final YeelightSocketHolder socketHolder;
     /**
      * Device effect setting for commands
      */
@@ -115,7 +116,7 @@ public class YeelightDevice {
      * @throws YeelightSocketException when socket error occurs
      * @throws YeelightResultErrorException when command result is an error
      */
-    private String[] sendCommand(YeelightCommand command) throws YeelightSocketException, YeelightResultErrorException {
+    public String[] sendCommand(YeelightCommand command) throws YeelightSocketException, YeelightResultErrorException {
         String jsonCommand = command.toJson() + "\r\n";
         this.socketHolder.send(jsonCommand);
         return this.readUntilResult(command.getId());
@@ -309,5 +310,19 @@ public class YeelightDevice {
         }
         YeelightCommand command = new YeelightCommand("set_name", name);
         this.sendCommand(command);
+    }
+    
+    public YeelightMusicServer enableMusicMode() throws YeelightSocketException, IOException {
+        YeelightMusicServer server = new YeelightMusicServer();
+        server.register(this);
+        return server;
+    }
+    
+    public YeelightEffect getEffect() {
+        return effect;
+    }
+    
+    public int getDuration() {
+        return duration;
     }
 }
