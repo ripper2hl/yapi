@@ -347,11 +347,4 @@ public class YeelightDeviceTest {
         YeelightDevice device = createTestingDevice(expectedSentCommand);
         device.setName(name);
     }
-    
-    @Test
-    @PrepareForTest(YeelightDevice.class)
-    public void setMusicModeTest(String musicMode, YeelightCommand expectedSentCommand) throws Exception {
-        YeelightDevice device = createTestingDevice(expectedSentCommand);
-        device.enableMusicMode();
-    }
 }
